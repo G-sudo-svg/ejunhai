@@ -50,7 +50,7 @@
 			<div class="sidebar"></div>
 		</div>
 		<div class="rfbar">
-			<iframe id="rframe" name="rframe" border="0" frameBorder="0" height="100%"  src="${BasePath}/config/redirect.sc?url=Main"   scrolling="no" onload="this.height=rframe.document.body.scrollHeight" ></iframe>
+			<iframe id="rframe" name="rframe" border="0" frameBorder="0" height="100%"  src="${BasePath}/config/redirect.sc?url=main"   scrolling="no" onload="this.height=rframe.document.body.scrollHeight" ></iframe>
 		</div>
 	</div>
 </div>
@@ -194,7 +194,7 @@ $(".nav li a").each(function(){
 $(function(){
 $("body").addClass('close_left');
 $(".lfbar").hide();
-iframeHomeSrc('${BasePath}/config/redirect.sc?url=Main')//F5刷新跳转到主面板
+iframeHomeSrc('${BasePath}/config/redirect.sc?url=main')//F5刷新跳转到主面板
 $("#rframe").load(function(){           
 $('html, body').animate({scrollTop: '0px'});//框架加载滚动到顶部
 });
