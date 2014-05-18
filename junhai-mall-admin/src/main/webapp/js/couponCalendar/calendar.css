@@ -1,0 +1,668 @@
+@charset "utf-8";
+/* CSS Document */
+a, a:hover {
+    text-decoration: none;
+}
+body, div, dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6, pre, code,
+form, fieldset, legend, input, button,
+textarea, p, blockquote, th, td {
+        margin: 0;
+        padding: 0;
+}
+fieldset, img {
+        border: 0;
+}
+/* remember to define focus styles! */
+:focus {
+        outline: 0;
+}
+address, caption, cite, code, dfn,
+em, strong, th, var, optgroup {
+        font-style: normal;
+        font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+        font-size: 100%;
+        font-weight: normal;
+}
+abbr, acronym {
+        border: 0;
+        font-variant: normal;
+}
+
+input, button, textarea,
+select, optgroup, option {
+        font-family: inherit;
+        font-size: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+}
+code, kbd, samp, tt {
+        font-size: 100%;
+}
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input, button, textarea, select {
+        *font-size: 100%;
+}
+body {
+        line-height: 1.5;
+}
+ol, ul , li {
+        list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+        border-collapse: collapse;
+        border-spacing: 0;
+}
+caption, th {
+        text-align: left;
+}
+sup, sub {
+        font-size: 100%;
+        vertical-align: baseline;
+}
+/* remember to highlight anchors and inserts somehow! */
+:link, :visited , ins {
+        text-decoration: none;
+}
+blockquote, q {
+        quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+        content: '';
+        content: none;
+}
+
+.clearfix:after { 
+        content: "."; 
+        display: block; 
+        height: 0; 
+        clear: both; 
+        visibility: hidden; 
+}
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/ 
+* html .clearfix {height: 1%;} 
+.clearfix {display: block;} 
+/* End hide from IE-mac */
+
+
+
+#section
+{
+	position: relative;
+	z-index: 99;
+	width: 608px;
+	/*height: 473px;*/
+	border: #c2c2c2 1px solid;
+	margin: 0 auto;
+	padding: 0px;
+	font-family: "΢���ź�" , "����";
+	font-size: 12px;
+	background: #fff;
+    -webkit-box-shadow:2px 2px 6px #777777;
+    -moz-box-shadow:2px 2px 6px #777777;    
+    /*box-shadow:2px 2px 6px #777777;*/
+}
+
+#orderleft
+{
+	float: left;
+	width: 609px;
+	height: 432px;
+}
+.calendartitle
+{
+	width: 578px;
+	height: 35px;
+	border-right: #dcdcdc 1px solid;
+	padding: 8px 15px 0 15px;
+	vertical-align: middle;
+}
+.calendartitle div
+{
+	float: left;
+	width: 53px;
+	height: 28px;
+}
+.calendartitle a
+{
+	display: block;
+	float: left;
+	width: 53px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	text-decoration: none;
+	background: url(/images/monthbg.png) no-repeat;
+}
+.calendartitle img
+{
+	float: left;
+}
+.calendartitle span
+{
+	display: block;
+	float: left;
+	width: 158px;
+	height: 28px;
+	line-height: 28px;
+	padding: 0 154px;
+	text-align: center;
+	font-size: 18px;
+	color: #3a3939;
+}
+.weekday
+{
+	float: left;
+	width: 609px;
+	height: 28px;
+}
+.weekday li
+{
+	float: left;
+	width: 86px;
+	height: 27px;
+	line-height: 27px;
+	border-top: #d6d5d5 1px solid;
+	border-right: #d6d5d5 1px solid;
+	text-align: center;
+	letter-spacing: 1px;
+	font-size: 13px;
+	color: #3a3939;
+}
+.day
+{
+	position: relative;
+	float: left;
+	width: 609px;
+	height: auto;
+}
+.day li
+{
+	position: relative;
+	float: left;
+	width: 56px;
+	height: 43px;
+	padding: 16px 15px 0 15px;
+	border-top: #dbdbdb 1px solid;
+	border-right: #dbdbdb 1px solid;
+	font-size: 11px;
+	color: #bcbcbc;
+	text-align: right;
+   font-family:Georgia, Times New Roman, Times, serif;
+}
+.day li em
+{
+	display: block;
+	padding: 0px;
+	line-height: 20px;
+	font-size: 18px;
+	color: #adadad;
+	font-family:"΢���ź�";
+}
+.day li .checkinout
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	padding: 0 4px;
+	height: 19px;
+	line-height: 19px;
+	font-size: 12px;
+	color: #fff;
+}
+
+.day li .tip{
+	background: url(/images/ttbg.jpg) no-repeat;
+	width: 110px;
+	height: 35px;
+	position: absolute;
+	top: -10px;
+	left: -50px;
+	text-align: center;
+	font-size: 13px;
+	padding: 5px;
+	display: none;
+	line-height:110%;
+	color:#000000;
+}
+
+.day .nothismonth
+{
+	color: #bbb9b9;
+    }
+.day .nothismonth em
+{
+	color: #bbb9b9;
+    }
+.day .bypass
+{
+	color: #bbb9b9;
+}
+.day .bypass em
+{
+	color: #bbb9b9;
+}
+.day .coming
+{
+	color: #8b8b8b;
+}
+.day .coming em
+{
+	color: #000000;
+}
+.day .sellout
+{
+	display: block;
+	position: absolute;
+	left: 0px;
+	top: -1px;
+	padding: 0 5px;
+	height: 19px;
+	line-height: 19px;
+	color: #a2a1a1;
+	font-size: 12px;
+}
+.day .selllittle
+{
+	display: block;
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	padding: 0 5px;
+	height: 19px;
+	line-height: 19px;
+	color: #fff;
+	font-size: 12px;
+	background: #f6680c;
+}
+.day .orderfirst
+{
+	z-index:999999;
+	position:relative;
+	border: #000 1px solid;
+	border-right: #5b5a5a 1px solid;
+	background: #7e7e7e;
+	left: -1px;
+	top: -1px;
+	color: #efefef;
+	font-size: 13px;
+}
+.day .orderfirst em
+{
+	font-size: 18px;
+	color: #fff;
+}
+.day .ordercenter
+{
+	border: #000 1px solid;
+	border-right: #5b5a5a 1px solid;
+	border-left: 0;
+	background: #7e7e7e;
+	margin-top: -1px;
+	color: #efefef;
+	font-size: 13px;
+}
+.day .ordercenter em
+{
+	font-size: 18px;
+	color: #fff;
+}
+.day .orderlast
+{
+	z-index: 10;
+	border: #000 1px solid;
+	border-left: 0;
+	background: #7e7e7e;
+	margin-top: -1px;
+	color: #efefef;
+	font-size: 13px;
+}
+.day .orderlast em
+{
+	font-size: 18px;
+	color: #fff;
+}
+#closeicon
+{
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	z-index:9999;
+	width:25px;
+	height:25px;
+	display:block;
+}
+.arrowbg{ display:block; z-index:99;float:right;border-right:25px #F6680C solid; border-bottom:25px transparent solid; height:0px; overflow:hidden;width:0px; position:absolute; top:-1px; right:0px;}
+.arrowtext{ display:block; z-index:100;font-size:11px; font-family:Georgia, Times New Roman, Times, serif;color:#fff; position:absolute; top:-1px; right:0px;}
+.rect{border:#f6680c 1px solid; width:86px; height:59px; position:absolute; top:-2px; left:-1px;}
+#orderright
+{
+	position: relative;
+	float: right;
+	width: 319px;
+	border-left: #e2e1e1 1px solid;
+	height: 432px;
+}
+.roomtitle
+{
+	width: 309px;
+	height: 43px;
+	line-height: 43px;
+	padding-left: 10px;
+}
+.roomtitle span
+{
+	display: block;
+	float: left;
+	height: 43px;
+	line-height: 43px;
+	font-size: 12px;
+	color: #9e9c9c;
+}
+.roomselect
+{
+	/*position: relative;*/
+	width: 309px;
+	height: 33px;
+	padding-left: 10px;
+	border-bottom: #d7ab75 1px solid;
+	background: #fad5a7;
+}
+.roomselect span
+{
+	display: block;
+	float: left;
+	line-height: 33px;
+	font-size: 12px;
+	color: #565656;
+}
+.roomselect span em
+{
+	font-size: 12px;
+	font-weight: bold;
+	color: #f6680c;
+}
+.roomselect span input
+{
+	float: left;
+	height: 33px;
+	line-height: 33px;
+}
+.roomnotselect
+{
+	/*position: relative;*/
+	width: 309px;
+	height: 33px;
+	padding-left: 10px;
+	border-bottom: #e2e1e1 1px solid;
+	background: #F2F2F2;
+}
+.roomnotselect span
+{
+	display: block;
+	float: left;
+	line-height: 33px;
+	font-size: 12px;
+	color: #565656;
+}
+.roomnotselect span em
+{
+	font-size: 12px;
+	font-weight: bold;
+	color: #f6680c;
+}
+.roomnotselect span input
+{
+	float: left;
+	height: 33px;
+	line-height: 33px;
+}
+#roomlist
+{
+	height: 327px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.a1
+{
+	display: block;
+	width: 208px;
+	text-align: left;
+	overflow:hidden;
+}
+#orderright .a1 em
+{
+	float: left;
+	overflow: hidden;
+	width: 180px;
+	height: 33px;
+	padding-left: 6px;
+	font-weight: normal;
+	color: #565656;
+	white-space:nowrap;
+	overflow:hidden;
+}
+.a2
+{
+	display: block;
+	width: 58px;
+	text-align: center;
+}
+.a3
+{
+	display: block;
+	width: 84px;
+	padding-right: 16px;
+	text-align: right;
+}
+.roomitem
+{
+	cursor:pointer;
+}
+.room
+{
+	width: 291px;
+	height: 30px;
+	padding: 7px 0 7px 28px;
+	border-bottom: #f0f0f0 1px solid;
+	background: #fff;
+}
+.roomleft
+{
+	float: left;
+	width: 53px;
+	height: 30px;
+	padding-right: 0;
+}
+.roomright
+{
+	float: left;
+	width: 232px;
+	height: 30px;
+}
+.roomright span
+{
+	overflow: hidden;
+	display: block;
+	float: left;
+	width: 99px;
+	height: 18px;
+	line-height: 14px;
+	font-size: 12px;
+	color: #919090;
+}
+.roomright span em
+{
+	color: #717171;
+}
+.orderpay
+{
+	position: absolute;
+	bottom: 0px;
+	width: 319px;
+	height: 60px;
+	border-top: #e2e1e1 1px solid;
+	background: #fff;
+}
+.orderpay .text
+{
+	float: left;
+	width: 61px;
+	height: 28px;
+	line-height: 28px;
+	padding: 18px 0px 14px 0;
+	font-size: 12px;
+	color: #7f7f7f;
+	text-align: right;
+}
+.orderpay .roomcount
+{
+	position: relative;
+	z-index:99999;
+	float: left;
+	width: 63px;
+	height: 28px;
+	line-height: 28px;
+	/*padding: 18px 25px 14px 0;*/
+	padding: 18px 15px 14px 0;
+	font-size: 12px;
+	color: #7f7f7f;
+}
+.orderpay .roomcount span
+{
+	overflow:hidden;
+	display:block;
+	float: left;
+	width: 34px;
+	height: 26px;
+	border: #e2e2e2 1px solid;
+	border-right: 0px;
+	font-size: 12px;
+	color: #7f7f7f;
+	text-align: center;
+}
+.orderpay .roomcount img
+{
+	float: left;
+	cursor: pointer;
+}
+.orderpay .roomtotal
+{
+	float: left;
+	width: 70px;
+	height: 46px;
+	line-height: 14px;
+	padding: 14px 11px 0 0;
+	font-size: 12px;
+	color: #8f8f8f;
+	text-align: left;
+}
+.orderpay .roomtotal em
+{
+	line-height: 23px;
+	font-size: 20px;
+	color: #ff0000;
+}
+.orderpay .paysubmit
+{
+	float: left;
+	width: 84px;
+	height: 49px;
+	padding: 6px 5px 5px 0;
+}
+.orderpay .paysubmit input
+{
+	width: 84px;
+	height: 49px;
+	border: 0;
+	cursor: pointer;
+	background: url(http://cdn.yaochufa.com/images/bg-pay_go.gif);
+}
+.orderpay .paysubmit_end input
+{
+	background: url(http://cdn.yaochufa.com/images/bg-pay_over.gif) !important;
+}
+.orderpay .paysubmit .paybook
+{
+	width: 84px;
+	height: 49px;
+	border: 0;
+	cursor: pointer;
+	background: url(http://cdn.yaochufa.com/images/bg-pay_book.gif);
+}
+#roomcountlist
+{
+	display: none;
+	position: absolute;
+	z-index: 99999;
+	left: 0px;
+	top: 46px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 61px;
+	height: auto;
+	max-height: 200px;
+	/*_height:expression(document.getElementById("roomcountlist").clientHeight>200?"200px":document.getElementById("roomcountlist").clientHeight);*/
+	border: #e3e3e3 1px solid;
+	border-top: 0;
+	background: #fff;
+}
+#roomcountlist li
+{
+	width: 44px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 12px;
+	color: #7f7f7f;
+	text-align: center;
+}
+#roomcountlist li a
+{
+	display: block;
+	width: 44px;
+	height: 20px;
+	cursor: pointer;
+}
+#roomcountlist li a:hover
+{
+	background: #DDD9EA;
+}
+#roomerror
+{
+	position: absolute;
+	z-index: 100;
+	width: 280px;
+	height: 144px;
+	padding: 5px;
+	background: url(http://cdn.yaochufa.com/images/calendar/errorbg.png) no-repeat;
+}
+#roomerror a:hover
+{
+}
+.errorclose
+{
+	display: block;
+	width: 275px;
+	height: 18px;
+	padding: 5px 5px 5px 0;
+	text-align: right;
+}
+.errormsg
+{
+	display: block;
+	width: 267px;
+	height: 43px;
+	line-height: 43px;
+	padding-right: 23px;
+	text-align: center;
+	font-size: 15px;
+	color: #a10000;
+}

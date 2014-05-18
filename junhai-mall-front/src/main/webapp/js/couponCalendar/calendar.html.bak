@@ -1,0 +1,58 @@
+﻿<link href="calendar.css" rel="stylesheet" type="text/css" />
+<script src="jquery-1.6.2.min.js" type="text/javascript"></script>
+<script src="calendar.js" type="text/javascript"></script>
+
+<div id="section" class="clearfix">
+    <div id="orderleft" class="clearfix">
+        <div class="calendartitle">
+            <div>
+				<a style="display: block;" href="javascript:void(0);" id="upmonth">上月</a>
+			</div>
+			<span id="dayTitle"></span>
+		<div>
+			<a href="javascript:void(0);" id="nextmonth">下月</a>
+		</div>
+		</div>
+        <ul class="weekday">
+            <li>星期日</li>
+            <li>星期一</li>
+            <li>星期二</li>
+            <li>星期三</li>
+            <li>星期四</li>
+            <li>星期五</li>
+            <li>星期六</li>
+        </ul>
+        <ul id="dayTable" class="day"></ul>
+    </div>
+</div>
+	
+	<div style="width:130px"><div style="width:15px;height:19px;background-color:red;float:left;"></div><div style="float:left;">为您的预约时间</div></div>
+
+
+<script type="text/javascript">
+	var get = {
+		byId : function(id){
+			return document.getElementById(id);
+		}
+	};
+	
+	var EventUtil = {
+		addHandler: function (oElement, sEvent, fnHandler) {
+		if (oElement) {
+		oElement.addEventListener ? oElement.addEventListener(sEvent, fnHandler, false) : (oElement["_" + sEvent + fnHandler] = fnHandler, oElement[sEvent + fnHandler] = function () { oElement["_" + sEvent + fnHandler]() }, oElement.attachEvent("on" + sEvent, oElement[sEvent + fnHandler]))
+		}
+		},
+		removeHandler: function (oElement, sEvent, fnHandler) {
+		if (oElement) {
+		oElement.removeEventListener ? oElement.removeEventListener(sEvent, fnHandler, false) : oElement.detachEvent("on" + sEvent, oElement[sEvent + fnHandler])
+		}
+		},
+		addLoadHandler: function (fnHandler) {
+			this.addHandler(window, "load", fnHandler)
+		}
+		}; 
+
+    $(function () {
+        loadcalendar('2012-7-29',2);
+    });
+</script>

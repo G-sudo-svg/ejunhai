@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.junhaimall.order.dao.OrderLogMapper" >
+    <resultMap id="OrderLogMap" type="com.ejunhai.junhaimall.order.model.OrderLog" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="behaviout_describe" property="behavioutDescribe" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="log_type" property="logType" jdbcType="INTEGER" />
+        <result column="operate_user" property="operateUser" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="show_flag" property="showFlag" jdbcType="VARCHAR" />
+    </resultMap>
+    
+     <select id="queryOrderLogList" resultMap="OrderLogMap" parameterType="com.ejunhai.junhaimall.order.model.OrderLog">
+  		SELECT *from tbl_order_log where 1=1
+  		<if test="orderNo != null and orderNo !=''">and order_no like CONCAT('%',#{orderNo},'%') </if>
+  		<if test="operateUser != null and operateUser !=''">and operate_user=#{operateUser} </if>
+		order by create_time asc
+  	</select>
+  	
+  	<select id="queryOrderLogCount" parameterType="com.ejunhai.junhaimall.order.model.OrderLog" resultType="int">
+  		SELECT count(1) FROM tbl_order_log where 1=1
+  		<if test="orderNo != null and orderNo !=''">and order_no like CONCAT('%',#{orderNo},'%') </if>
+  		<if test="operateUser != null and operateUser !=''">and operate_user=#{operateUser} </if>
+  	</select>
+        
+  	<insert id="insertOrderLog" parameterType="com.ejunhai.junhaimall.order.model.OrderLog">
+	  	insert into tbl_order_log (id, behaviout_describe, create_time, log_type,operate_user, order_no,remark, show_flag)
+	    values (#{id,jdbcType=VARCHAR}, #{behavioutDescribe,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+	     	#{logType,jdbcType=INTEGER}, #{operateUser,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},
+	     	#{remark,jdbcType=VARCHAR},#{showFlag,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="removeOrderLog" parameterType="String">
+  		delete FROM tbl_order_log where id=#{id}
+  	</delete>
+</mapper>

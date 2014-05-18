@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.junhaimall.coupon.dao.CouponSchemeMapper" >
+    <resultMap id="CouponSchemeMap" type="com.ejunhai.junhaimall.coupon.model.CouponScheme" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+        <result column="init_activate" property="initActivate" jdbcType="INTEGER" />
+        <result column="use_startdate" property="useStartdate" jdbcType="TIMESTAMP" />
+        <result column="use_enddate" property="useEnddate" jdbcType="TIMESTAMP" />
+        <result column="par_value" property="parValue" jdbcType="INTEGER" />
+        <result column="issue_amount" property="issueAmount" jdbcType="INTEGER" />
+        <result column="has_issue_num" property="hasIssueNum" jdbcType="INTEGER" />
+        <result column="has_use_num" property="hasUseNum" jdbcType="INTEGER" />
+        <result column="has_disturb" property="hasDisturb" jdbcType="INTEGER" />
+        <result column="day_limit_num" property="dayLimitNum" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <select id="queryCouponSchemeList" resultMap="CouponSchemeMap" parameterType="com.ejunhai.junhaimall.coupon.model.CouponScheme">
+  		SELECT *from tbl_coupon_scheme where 1=1
+  		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
+  		<if test="parValue != null and parValue>0">and par_value=#{parValue}</if>
+  		<if test="state != null and state == 0">
+  			and use_startdate <![CDATA[>=]]> now() 
+  		</if>
+  		<if test="state != null and state == 1">
+  			and use_startdate <![CDATA[<=]]> now() and use_enddate <![CDATA[>=]]> now() 
+  		</if>
+  		<if test="state != null and state == 2">
+  			and use_enddate <![CDATA[<=]]> now()
+  		</if>
+		order by create_time desc
+  	</select>
+  	
+  	<select id="queryCouponSchemeCount" parameterType="com.ejunhai.junhaimall.coupon.model.CouponScheme" resultType="int">
+  		SELECT count(1) FROM tbl_coupon_scheme where 1=1
+  		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
+  		<if test="parValue != null and parValue>0">and par_value=#{parValue}</if>
+  		<if test="state != null and state == 0">
+  			and use_startdate <![CDATA[>=]]> now() 
+  		</if>
+  		<if test="state != null and state == 1">
+  			and use_startdate <![CDATA[<=]]> now() and use_enddate <![CDATA[>=]]> now() 
+  		</if>
+  		<if test="state != null and state == 2">
+  			and use_enddate <![CDATA[<=]]> now()
+  		</if>
+  	</select>
+  	
+  	<select id="readCouponScheme" parameterType="String" resultMap="CouponSchemeMap">
+  		SELECT * FROM tbl_coupon_scheme where id=#{id}
+  	</select>
+    
+    <insert id="insertCouponScheme" parameterType="com.ejunhai.junhaimall.coupon.model.CouponScheme">
+	  	insert into tbl_coupon_scheme (id, coupon_name,init_activate, use_startdate, use_enddate, par_value, 
+	      	issue_amount, day_limit_num, create_time, remark )
+	    values (#{id,jdbcType=VARCHAR}, #{couponName,jdbcType=VARCHAR},#{initActivate,jdbcType=INTEGER},
+	    	#{useStartdate,jdbcType=TIMESTAMP}, #{useEnddate,jdbcType=TIMESTAMP},#{parValue,jdbcType=INTEGER}, 
+	    	#{issueAmount,jdbcType=INTEGER},#{dayLimitNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+	    	#{remark,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateCouponScheme" parameterType="com.ejunhai.junhaimall.coupon.model.CouponScheme">
+		update tbl_coupon_scheme
+    	<set >
+	      <if test="couponName != null and couponName !=''" >coupon_name = #{couponName,jdbcType=VARCHAR},</if>
+	      <if test="initActivate != null" >init_activate = #{initActivate,jdbcType=INTEGER},</if>
+	      <if test="useStartdate != null" >use_startdate = #{useStartdate,jdbcType=TIMESTAMP},</if>
+	      <if test="useEnddate != null" >use_enddate = #{useEnddate,jdbcType=TIMESTAMP},</if>
+	      <if test="parValue != null" >par_value = #{parValue,jdbcType=INTEGER},</if>
+	      <if test="issueAmount != null" >issue_amount = #{issueAmount,jdbcType=INTEGER},</if>
+	      <if test="hasIssueNum != null" >has_issue_num = #{hasIssueNum,jdbcType=INTEGER},</if>
+	      <if test="hasUseNum != null" >has_use_num = #{hasUseNum,jdbcType=INTEGER},</if>
+	      <if test="hasDisturb != null" >has_disturb = #{hasDisturb,jdbcType=INTEGER},</if>
+	      <if test="dayLimitNum != null" >day_limit_num = #{dayLimitNum,jdbcType=INTEGER},</if>
+	      <if test="remark != null and remark !=''" >remark = #{remark,jdbcType=VARCHAR}</if>
+	    </set>
+    	where id = #{id}
+	</update>
+	
+	<delete id="removeCouponScheme" parameterType="String">
+  		delete FROM tbl_coupon_scheme where id=#{id}
+  	</delete>
+</mapper>

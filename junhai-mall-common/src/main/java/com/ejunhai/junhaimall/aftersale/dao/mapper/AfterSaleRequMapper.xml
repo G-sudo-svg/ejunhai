@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.junhaimall.aftersale.dao.AfterSaleRequMapper" >
+    <resultMap id="AfterSaleRequMap" type="com.ejunhai.junhaimall.aftersale.model.AfterSaleRequ" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="pic1_url" property="pic1Url" jdbcType="VARCHAR" />
+        <result column="pic2_url" property="pic2Url" jdbcType="VARCHAR" />
+        <result column="pic3_url" property="pic3Url" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+       	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="SMALLINT" />
+        <result column="order_main_no" property="orderMainNo" jdbcType="VARCHAR" />
+        <result column="deal_time" property="dealTime" jdbcType="TIMESTAMP" />
+        <result column="deal_info" property="dealInfo" jdbcType="VARCHAR" />
+        
+        <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+        <result column="coupon_number" property="couponNumber" jdbcType="VARCHAR" />
+        <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <insert id="insertAfterSaleRequ" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleRequ">
+	  	insert into tbl_after_sale_requ (id, pic1_url, pic2_url, pic3_url, description, create_time, state,order_main_no) 
+	     values (#{id,jdbcType=VARCHAR}, #{pic1Url,jdbcType=VARCHAR}, #{pic2Url,jdbcType=VARCHAR}, #{pic3Url,jdbcType=VARCHAR},
+	     	#{description,jdbcType=VARCHAR} ,#{createTime,jdbcType=TIMESTAMP},
+	     	#{state,jdbcType=SMALLINT} , #{orderMainNo,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="readAfterSaleRequ" parameterType="String" resultMap="AfterSaleRequMap">
+  		SELECT * FROM tbl_after_sale_requ where id=#{id}
+  	</select>
+  	
+  	<select id="getAfterSaleRequByOrderMainNo" parameterType="String" resultMap="AfterSaleRequMap">
+  		SELECT * FROM tbl_after_sale_requ where order_main_no=#{orderMainNo}
+  	</select>
+  	
+  	
+  	<update id="updateAfterSaleRequ" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleRequ">
+		update tbl_after_sale_requ
+    	<set >
+	      <if test="state != null" >state = #{state,jdbcType=SMALLINT},</if>
+	      <if test="dealTime != null" >deal_time = #{dealTime,jdbcType=TIMESTAMP},</if>
+	      <if test="dealInfo != null" >deal_info = #{dealInfo,jdbcType=VARCHAR},</if>
+	    </set>
+    	where id = #{id}
+	</update>
+  	
+  	<select id="queryAfterSaleRequList" resultMap="AfterSaleRequMap" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleRequ">
+  		SELECT asr.*,om.consignee,c.coupon_number,cs.coupon_name FROM tbl_after_sale_requ asr 
+		LEFT JOIN tbl_order_main om ON asr.order_main_no=om.order_main_no
+		LEFT JOIN tbl_coupon c ON c.use_order_number=om.order_main_no
+		LEFT JOIN tbl_coupon_scheme cs ON c.coupon_scheme_id=cs.id where 1=1
+  		<if test="state != 0">and asr.state=#{state}</if>
+  		<if test="orderMainNo != null and orderMainNo != ''">and asr.order_main_no=#{orderMainNo}</if>
+		order by create_time desc
+  	</select>
+  	
+  	<select id="queryAfterSaleRequCount" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleRequ" resultType="int">
+  		SELECT count(id) FROM tbl_after_sale_requ where 1=1
+  		<if test="state != 0">and state=#{state}</if>
+  		<if test="orderMainNo != null and orderMainNo != ''">and order_main_no=#{orderMainNo}</if>
+  	</select>
+</mapper>

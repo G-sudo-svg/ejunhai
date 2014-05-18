@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.junhaimall.coupon.dao.CouponMapper" >
+  	<resultMap id="CouponMap" type="com.ejunhai.junhaimall.coupon.model.Coupon" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="coupon_number" property="couponNumber" jdbcType="VARCHAR" />
+         <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+        <result column="par_value" property="parValue" jdbcType="INTEGER" />
+        <result column="coupon_password" property="couponPassword" jdbcType="VARCHAR" />
+        <result column="coupon_scheme_id" property="couponSchemeId" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="SMALLINT" />
+        <result column="use_startdate" property="useStartdate" jdbcType="TIMESTAMP" />
+        <result column="use_enddate" property="useEnddate" jdbcType="TIMESTAMP" />
+        <result column="use_time" property="useTime" jdbcType="TIMESTAMP" />
+        <result column="use_order_number" property="useOrderNumber" jdbcType="VARCHAR" />
+        <result column="generate_time" property="generateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <select id="queryCouponList" resultMap="CouponMap" parameterType="com.ejunhai.junhaimall.coupon.model.Coupon">
+  		SELECT c.*,cs.coupon_name,cs.par_value FROM tbl_coupon c LEFT JOIN tbl_coupon_scheme cs 
+  		ON c.coupon_scheme_id=cs.id where 1=1
+  		<if test="couponSchemeId != null and couponSchemeId !=''"> and coupon_scheme_id = #{couponSchemeId} </if>
+  		<if test="state != null">and state=#{state} </if>
+  		<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT(#{couponNumber},'%') </if>
+  	</select>
+  	
+  	<select id="queryCouponCount" parameterType="com.ejunhai.junhaimall.coupon.model.Coupon" resultType="int">
+  		SELECT count(1) FROM tbl_coupon where 1=1
+  		<if test="couponSchemeId != null and couponSchemeId !=''"> and coupon_scheme_id = #{couponSchemeId} </if>
+  		<if test="state != null">and state=#{state} </if>
+  		<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT(#{couponNumber},'%') </if>
+  	</select>
+  	
+  	<select id="readCoupon" parameterType="String" resultMap="CouponMap">
+  		SELECT * FROM tbl_coupon where id=#{id}
+  	</select>
+  	
+  	<select id="getCouponByNo" parameterType="String" resultMap="CouponMap">
+  		SELECT * FROM tbl_coupon where coupon_number=#{id}
+  	</select>
+  	
+  	<select id="getCouponByOrderNumber" parameterType="String" resultMap="CouponMap">
+  		SELECT * FROM tbl_coupon where use_order_number=#{orderNumber}
+  	</select>
+    
+    <insert id="insertCoupon" parameterType="com.ejunhai.junhaimall.coupon.model.Coupon">
+	  	insert into tbl_coupon (id, coupon_number, coupon_password, coupon_scheme_id, 
+	  		state, use_startdate, use_enddate, generate_time )
+	    values (#{id,jdbcType=VARCHAR}, #{couponNumber,jdbcType=VARCHAR}, #{couponPassword,jdbcType=VARCHAR},
+	    	#{couponSchemeId,jdbcType=VARCHAR} , #{state,jdbcType=SMALLINT},#{useStartdate,jdbcType=TIMESTAMP}, 
+	    	#{useEnddate,jdbcType=TIMESTAMP},#{generateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<update id="updateCoupon" parameterType="com.ejunhai.junhaimall.coupon.model.Coupon">
+		update tbl_coupon
+    	<set >
+	      <if test="state != null" >state = #{state,jdbcType=SMALLINT},</if>
+	      <if test="useStartdate != null" >use_startdate = #{useStartdate,jdbcType=TIMESTAMP},</if>
+	      <if test="useEnddate != null" >use_enddate = #{useEnddate,jdbcType=TIMESTAMP},</if>
+	      <if test="useTime != null" >use_time = #{useTime,jdbcType=TIMESTAMP},</if>
+	      <if test="useOrderNumber != null  and useOrderNumber !=''" >use_order_number = #{useOrderNumber,jdbcType=VARCHAR}</if>
+	    </set>
+    	where id = #{id}
+	</update>
+	
+	<update id="disturbCoupon" parameterType="String">
+		update tbl_coupon
+    	<set >
+    		coupon_password=md5(coupon_password)
+	    </set>
+    	where coupon_scheme_id = #{couponSchemeId}
+	</update>
+	
+	<select id="usedCouponCountByDate1" parameterType="com.ejunhai.junhaimall.coupon.model.CouponUseDataVo" resultType="int">
+  		SELECT COUNT(c.id) FROM tbl_coupon c LEFT JOIN tbl_order_main om 
+		ON c.use_order_number = om.order_main_no 
+		WHERE c.coupon_scheme_id=#{couponSchemeId,jdbcType=VARCHAR} AND c.state=2 
+		AND DATE_FORMAT(c.use_time,'%Y-%m-%d')=DATE_FORMAT(#{useDate,jdbcType=VARCHAR},'%Y-%m-%d')
+  	</select>
+  	
+  	<select id="usedCouponCountByDate" parameterType="com.ejunhai.junhaimall.coupon.model.CouponUseDataVo" resultType="int">
+  		SELECT COUNT(1) FROM tbl_order_main m WHERE  DATE_FORMAT(m.order_date,'%Y-%m-%d')=DATE_FORMAT(#{useDate,jdbcType=VARCHAR},'%Y-%m-%d');
+  	</select>
+	
+</mapper>

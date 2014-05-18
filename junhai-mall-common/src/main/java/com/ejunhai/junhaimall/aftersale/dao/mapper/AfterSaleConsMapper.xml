@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.junhaimall.aftersale.dao.AfterSaleConsMapper" >
+    <resultMap id="AfterSaleConsMap" type="com.ejunhai.junhaimall.aftersale.model.AfterSaleCons" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="consultation" property="consultation" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="SMALLINT" />
+        <result column="reply" property="reply" jdbcType="VARCHAR" />
+        <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
+        <result column="order_main_no" property="orderMainNo" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <insert id="insertAfterSaleCons" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleCons">
+	  	insert into tbl_after_sale_cons (id, consultation, create_time, state, 
+	  		reply, reply_time, order_main_no )
+	    values (#{id,jdbcType=VARCHAR}, #{consultation,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+	    	#{state,jdbcType=SMALLINT} , #{reply,jdbcType=VARCHAR},#{replyTime,jdbcType=TIMESTAMP}, 
+	    	#{orderMainNo,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="readAfterSaleCons" parameterType="String" resultMap="AfterSaleConsMap">
+  		SELECT * FROM tbl_after_sale_cons where id=#{id}
+  	</select>
+	
+	<select id="queryAfterSaleConsList" resultMap="AfterSaleConsMap" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleCons">
+  		SELECT * from tbl_after_sale_cons where 1=1
+  		<if test="consultation != null and consultation != ''">and consultation like CONCAT('%',#{consultation},'%')</if>
+  		<if test="state != 0">and state=#{state}</if>
+  		<if test="orderMainNo != null and orderMainNo != ''">and order_main_no=#{orderMainNo}</if>
+		order by create_time desc
+  	</select>
+	            
+	<select id="queryAfterSaleConsCount" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleCons" resultType="int">
+  		SELECT count(1) from tbl_after_sale_cons where 1=1
+  		<if test="consultation != null and consultation != ''">and consultation like CONCAT('%',#{consultation},'%')</if>
+  		<if test="state != 0">and state=#{state}</if>
+  		<if test="orderMainNo != null and orderMainNo != ''">and order_main_no=#{orderMainNo}</if>
+  	</select>
+	
+	<update id="doAfterSaleConsReply" parameterType="com.ejunhai.junhaimall.aftersale.model.AfterSaleCons">
+		update tbl_after_sale_cons 
+    	<set>
+	      <if test="reply != null and reply != ''">state = 2,</if>
+	      reply_time=now(),reply = #{reply,jdbcType=VARCHAR} 
+	    </set>
+    	where id = #{id}
+	</update>
+</mapper>

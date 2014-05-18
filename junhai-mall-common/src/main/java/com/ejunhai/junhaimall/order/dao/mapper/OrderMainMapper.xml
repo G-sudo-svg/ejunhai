@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.junhaimall.order.dao.OrderMainMapper" >
+    <resultMap id="OrderMainMap" type="com.ejunhai.junhaimall.order.model.OrderMain" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="order_main_no" property="orderMainNo" jdbcType="VARCHAR" />
+        <result column="coupon_number" property="couponNumber" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="SMALLINT" />
+        <result column="pay_amount" property="payAmount" jdbcType="DOUBLE" />
+        <result column="order_date" property="orderDate" jdbcType="VARCHAR" />
+        <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+        <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+        <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+        <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+        <result column="province_city_area" property="provinceCityArea" jdbcType="VARCHAR" />
+        <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
+        <result column="logistics_company_code" property="logisticsCompanyCode" jdbcType="VARCHAR" />
+        <result column="logistics_company" property="logisticsCompany" jdbcType="VARCHAR" />
+        <result column="express_order_no" property="expressOrderNo" jdbcType="VARCHAR" />
+        <result column="deliver_time" property="deliverTime" jdbcType="TIMESTAMP" />
+        <result column="is_send_sms" property="isSendSms" jdbcType="SMALLINT" />
+        <result column="is_print_express" property="isPrintExpress" jdbcType="SMALLINT" />
+    </resultMap>
+    
+     <select id="queryOrderMainList" resultMap="OrderMainMap" parameterType="com.ejunhai.junhaimall.order.model.OrderMain">
+  		SELECT *from tbl_order_main where 1=1
+  		<if test="orderMainNo != null and orderMainNo !=''">and order_main_no like CONCAT('%',#{orderMainNo},'%') </if>
+  		<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT('%',#{couponNumber},'%') </if>
+  		<if test="provinceCityArea != null and provinceCityArea !=''">and province_city_area like CONCAT('%',#{provinceCityArea},'%') </if>
+  		<if test="consignee != null and consignee !=''">and consignee=#{consignee} </if>
+  		<if test="orderDate != null and orderDate !=''">and order_date=#{orderDate} </if>
+  		<if test="state != null">and state=#{state} </if>
+  		<if test="startOrderTime != null">and create_time <![CDATA[>=]]> #{startOrderTime} </if>
+  		<if test="endOrderTime != null">and create_time <![CDATA[<=]]> #{endOrderTime} </if>
+  		<if test="isPrintExpress != null">and is_print_express=#{isPrintExpress} </if>
+		order by create_time desc
+  	</select>
+  	
+  	<select id="queryOrderMainCount" parameterType="com.ejunhai.junhaimall.order.model.OrderMain" resultType="int">
+  		SELECT count(1) FROM tbl_order_main where 1=1
+  		<if test="orderMainNo != null and orderMainNo !=''">and order_main_no like CONCAT('%',#{orderMainNo},'%') </if>
+  		<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT('%',#{couponNumber},'%') </if>
+  		<if test="provinceCityArea != null and provinceCityArea !=''">and province_city_area like CONCAT('%',#{provinceCityArea},'%') </if>
+  		<if test="consignee != null and consignee !=''">and consignee=#{consignee} </if>
+  		<if test="orderDate != null  and orderDate !=''">and order_date=#{orderDate} </if>
+  		<if test="state != null">and state=#{state} </if>
+  		<if test="startOrderTime != null">and create_time <![CDATA[>=]]> #{startOrderTime} </if>
+  		<if test="endOrderTime != null">and create_time <![CDATA[<=]]> #{endOrderTime} </if>
+  		<if test="isPrintExpress != null">and is_print_express=#{isPrintExpress} </if>
+  	</select>
+  	
+  	<select id="readOrderMain" parameterType="String" resultMap="OrderMainMap">
+  		SELECT * FROM tbl_order_main where id=#{id}
+  	</select>
+  	
+  	<select id="getOrdermainByOrderMainNo" parameterType="String" resultMap="OrderMainMap">
+  		SELECT * FROM tbl_order_main where order_main_no=#{orderMainNo}
+  	</select>
+  	
+  	<insert id="insertOrderMain" parameterType="com.ejunhai.junhaimall.order.model.OrderMain">
+	  	insert into tbl_order_main (id, order_main_no,coupon_number, create_time, state,pay_amount, order_date,consignee, 
+	  		mobile_phone,province_code,city_code,area_code, province_city_area, detail_address,logistics_company,express_order_no,is_send_sms )
+	    values (#{id,jdbcType=VARCHAR}, #{orderMainNo,jdbcType=VARCHAR},#{couponNumber,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+	     	#{state,jdbcType=SMALLINT}, #{payAmount,jdbcType=DOUBLE},#{orderDate,jdbcType=VARCHAR},
+	     	#{consignee,jdbcType=VARCHAR},#{mobilePhone,jdbcType=VARCHAR},#{provinceCode,jdbcType=VARCHAR},
+	     	#{cityCode,jdbcType=VARCHAR},#{areaCode,jdbcType=VARCHAR},#{provinceCityArea,jdbcType=VARCHAR},
+	     	#{detailAddress,jdbcType=VARCHAR},#{logisticsCompany,jdbcType=VARCHAR},#{expressOrderNo,jdbcType=VARCHAR},
+	     	#{isSendSms,jdbcType=SMALLINT})
+	</insert>
+	 
+	<update id="updateOrderMain" parameterType="com.ejunhai.junhaimall.order.model.OrderMain">
+		update tbl_order_main
+    	<set >
+	      <if test="state != null" >state = #{state,jdbcType=SMALLINT},</if>
+	      <if test="consignee != null and orderMainNo !=''" >consignee = #{consignee,jdbcType=VARCHAR},</if>
+	      <if test="mobilePhone != null and consignee !=''" >mobile_phone = #{mobilePhone,jdbcType=VARCHAR},</if>
+	      <if test="provinceCode != null and provinceCode !=''" >province_code = #{provinceCode,jdbcType=VARCHAR},</if>
+	      <if test="cityCode != null and cityCode !=''" >city_code = #{cityCode,jdbcType=VARCHAR},</if>
+	      <if test="areaCode != null and areaCode !=''" >area_code = #{areaCode,jdbcType=VARCHAR},</if>
+	      <if test="provinceCityArea != null and provinceCityArea !=''" >province_city_area = #{provinceCityArea,jdbcType=VARCHAR},</if>
+	      <if test="detailAddress != null and detailAddress !=''" >detail_address = #{detailAddress,jdbcType=VARCHAR},</if>
+	      <if test="logisticsCompanyCode != null and logisticsCompanyCode !=''" >logistics_company_code = #{logisticsCompanyCode,jdbcType=VARCHAR},</if>
+	      <if test="logisticsCompany != null and logisticsCompany !=''" >logistics_company = #{logisticsCompany,jdbcType=VARCHAR},</if>
+	      <if test="expressOrderNo != null and expressOrderNo !=''" >express_order_no = #{expressOrderNo,jdbcType=VARCHAR},</if>
+	      <if test="deliverTime != null " >deliver_time = #{deliverTime,jdbcType=TIMESTAMP},</if>
+	      <if test="isSendSms != null" >is_send_sms = #{isSendSms,jdbcType=SMALLINT},</if>
+	      <if test="isPrintExpress != null">and is_print_express=#{isPrintExpress} </if>
+	    </set>
+    	where id = #{id}
+	</update>
+	
+	<update id="printExpress" parameterType="java.lang.String">
+		update tbl_order_main set is_print_express=1 where id = #{id}
+	</update>
+	
+	<delete id="removeOrderMain" parameterType="String">
+  		delete FROM tbl_order_main where id=#{id}
+  	</delete>
+</mapper>
