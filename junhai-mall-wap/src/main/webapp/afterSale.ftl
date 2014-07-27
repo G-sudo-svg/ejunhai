@@ -59,9 +59,10 @@
 			  </div>
 			</form>
       	</#if>
+      	
+      	<#include "/common/footer.ftl" >
 	</div>
 	
-	<#include "/common/footer.ftl" >
     <script src="${BasePath}/js/jquery-1.10.2.min.js"></script>
     <script src="${BasePath}/js/bootstrap.min.js"></script>
     <script src="${BasePath}/js/bootstrap-file-input.js"></script>

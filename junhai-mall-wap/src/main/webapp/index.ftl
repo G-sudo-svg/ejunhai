@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${BasePath}/css/bootstrap-validator.min.css">
+    <link rel="stylesheet" href="http://ejunhai.qiniudn.com/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ejunhai.qiniudn.com/bootstrap-validator.min.css">
   </head>
   
   <body>
@@ -19,7 +19,7 @@
 		
 		  <div class="carousel-inner">
 		    <div class="item active">
-		      <img src="${BasePath}/images/banner.jpg?11" alt="...">
+		      <img src="http://ejunhai.qiniudn.com/banner.jpg" alt="...">
 		      <div class="carousel-caption">
 		      </div>
 		    </div>
@@ -59,14 +59,14 @@
 	    	
 		  </div>
 		</div>
+		
+		<#include "/common/footer.ftl" >
 	</div>
-
-	<#include "/common/footer.ftl" >
 	
-    <script src="${BasePath}/js/jquery-1.10.2.min.js"></script>
-    <script src="${BasePath}/js/bootstrap.min.js"></script>
-    <script src="${BasePath}/js/bootstrap-validator.min.js"></script>
-    <script src="${BasePath}/js/MD5.js"></script>
+    <script src="http://ejunhai.qiniudn.com/jquery-1.10.2.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap-validator.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/MD5.js"></script>
     <script>
 		$(document).ready(function() {
 			$('#validateCodeImage').click(function() {  

@@ -38,11 +38,13 @@
 				<div class="alert alert-danger">抱歉：您的礼品券无效</div>
 			</#if>
 		</#if>
+		
+		<#include "/common/footer.ftl" >
 	</div>
 	
-	<#include "/common/footer.ftl" >
+	
 
-    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/jquery.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap.min.js"></script>
   </body>
 </html>

@@ -7,8 +7,8 @@
     
     <!-- Bootstrap -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${BasePath}/css/bootstrap-validator.min.css">
-    <link rel="stylesheet" href="${BasePath}/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="http://ejunhai.qiniudn.com/bootstrap-validator.min.css">
+    <link rel="stylesheet" href="http://ejunhai.qiniudn.com/bootstrap-datetimepicker.min.css">
   </head>
   
   <body style="padding-top: 70px;">
@@ -78,17 +78,18 @@
 		    </div>
 		    <br/>
 	    </form>
+	    
+	    <#include "/common/footer.ftl" >
 	</div>
 	
-	<#include "/common/footer.ftl" >
 
-	<script src="${BasePath}/js/jquery-1.10.2.min.js"></script>
-    <script src="${BasePath}/js/bootstrap.min.js"></script>
-    <script src="${BasePath}/js/bootstrap-validator.min.js"></script>
-    <script src="${BasePath}/js/base.junhai.js"></script>
-    <script src="${BasePath}/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="${BasePath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script src="${BasePath}/js/areaselecor.js"></script>
+	<script src="http://ejunhai.qiniudn.com/jquery-1.10.2.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap-validator.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/base.junhai.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap-datetimepicker.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="http://ejunhai.qiniudn.com/areaselecor.js"></script>
     
     <script>
     	$(function(){

@@ -45,8 +45,9 @@
 		    <small><strong>详细地址</strong>：${orderMain.detailAddress!""}</small>
 		  </div>
 		</div>
+		
+		<#include "/common/footer.ftl" >
 	</div>
 	
-	<#include "/common/footer.ftl" >
   </body>
 </html>
