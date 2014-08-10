@@ -44,12 +44,16 @@ public class LoginController extends BaseController {
 
     @RequestMapping("/index")
     public String index(HttpServletRequest request, ModelMap modelMap) throws Exception {
-        // 从cookie中获取couponNumber
-        Cookie[] cookies = request.getCookies();
+
         String couponNumber = null;
-        for (Cookie cookie : cookies) {
-            if (COOKIE_COUPON_NUMBER.equals(cookie.getName())) {
-                couponNumber = cookie.getValue();
+        if (request.getCookies() != null) {
+            
+            // 从cookie中获取couponNumber
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (COOKIE_COUPON_NUMBER.equals(cookie.getName())) {
+                    couponNumber = cookie.getValue();
+                }
             }
         }
 

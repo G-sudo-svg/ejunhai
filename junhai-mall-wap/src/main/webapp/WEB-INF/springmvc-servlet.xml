@@ -22,9 +22,9 @@
 		<property name="exceptionMappings">
 			<props>
 				<prop key="com.ejunhai.junhaimall.framework.exception.ClientException">
-					forward:/clientException.sc
+					forward:/clientException.jhtml
 				</prop>
-				<prop key="java.lang.Exception">forward:/systemError.sc </prop>
+				<prop key="java.lang.Exception">forward:/systemError.jhtml </prop>
 			</props>
 		</property>
 	</bean>

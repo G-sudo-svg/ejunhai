@@ -18,7 +18,7 @@
 		</div>
 	</div>
 	<div style="color:red;width:990px; margin:auto;padding-left:200px;">
-		温馨提示：预约选择的时间为发货时间，而非到货时间！受到天气和季节影响，蟹已有所减产但很饱满，请您尽快预约。一般发货起48小时内可达。
+		温馨提示：预约选择的时间为发货时间，而非到货时间！根据多年养蟹经验，建议在10月中旬到11月这段时间内预约为佳。一般发货起48小时内可达。
 	</div>
 	<div class="title">
 		<div class="ticket_l">

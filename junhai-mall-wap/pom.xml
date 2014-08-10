@@ -48,26 +48,12 @@
 		</profile>
 
 		<profile>
-			<id>test</id>
-			<properties>
-				<mobile.db.master>localhost/ejuhai1019</mobile.db.master>
-				<mobile.db.user>ejuhai1019</mobile.db.user>
-				<mobile.db.password>p6r7e4</mobile.db.password>
-				<mobile.memcached.ip>10.10.10.202</mobile.memcached.ip>
-				<commodity.memcached.ip>10.10.10.202</commodity.memcached.ip>
-				<log4j.file.path>/logs</log4j.file.path>
-			</properties>
-		</profile>
-
-		<profile>
 			<id>prod</id>
 			<properties>
-				<mobile.db.master>localhost/ejuhai1018</mobile.db.master>
-				<mobile.db.user>ejuhai1018</mobile.db.user>
-				<mobile.db.password>liujin1018</mobile.db.password>
-				<mobile.memcached.ip>10.10.10.202</mobile.memcached.ip>
-				<commodity.memcached.ip>10.10.10.202</commodity.memcached.ip>
-				<log4j.file.path>/logs</log4j.file.path>
+				<mobile.db.master>rdsbrqmjj2iemyq.mysql.rds.aliyuncs.com/ejunhai</mobile.db.master>
+				<mobile.db.user>ejunhai</mobile.db.user>
+				<mobile.db.password>u2i433osfs</mobile.db.password>
+				<log4j.file.path>/alidata/log</log4j.file.path>
 			</properties>
 		</profile>
 	</profiles>
