@@ -61,7 +61,7 @@
   	
   	<insert id="insertOrderMain" parameterType="com.ejunhai.junhaimall.order.model.OrderMain">
 	  	insert into tbl_order_main (id, order_main_no,coupon_number, create_time, state,pay_amount, order_date,consignee, 
-	  		mobile_phone,province_code,city_code,area_code, province_city_area, detail_address,logistics_company,express_order_no,is_send_sms )
+	  		mobile_phone,province_code,city_code,area_code, province_city_area, detail_address,logistics_company,express_order_no,is_send_sms)
 	    values (#{id,jdbcType=VARCHAR}, #{orderMainNo,jdbcType=VARCHAR},#{couponNumber,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
 	     	#{state,jdbcType=SMALLINT}, #{payAmount,jdbcType=DOUBLE},#{orderDate,jdbcType=VARCHAR},
 	     	#{consignee,jdbcType=VARCHAR},#{mobilePhone,jdbcType=VARCHAR},#{provinceCode,jdbcType=VARCHAR},

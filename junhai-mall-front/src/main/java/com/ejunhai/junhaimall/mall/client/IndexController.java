@@ -1,6 +1,7 @@
 package com.ejunhai.junhaimall.mall.client;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -336,6 +337,20 @@ public class IndexController extends BaseController {
 				return "redirect:index.sc";
 			}
 		}
+		
+        // 提前预订时间
+        Config config = configService.getConfigByKey(CouponConstant.KEY_COUPON_DEFERDATE);
+        int deferDate = config == null ? 2 : Integer.parseInt(config.getConfigValue());
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = format.parse(DateUtil.format(DateUtil.addDate(new Date(), deferDate), "yyyy-MM-dd"));
+        Date endDate = format.parse(DateUtil.format(DateUtil.addDate(coupon.getUseEnddate(), deferDate), "yyyy-MM-dd"));
+        Date orderDate = format.parse(orderMain.getOrderDate());
+        
+        // 预定日期无效
+        if (!(orderDate.getTime() >= startDate.getTime() && orderDate.getTime() <= endDate.getTime())) {
+            return "redirect:toOrder.sc";
+        }
+        
 		orderMain = orderMainService.createOrderMain(coupon, orderMain);
 		return "redirect:toOrderInfo.sc?isJustNowOrder=true";
 	}

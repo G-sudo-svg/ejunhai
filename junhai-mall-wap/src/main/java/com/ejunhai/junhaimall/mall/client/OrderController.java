@@ -1,5 +1,7 @@
 package com.ejunhai.junhaimall.mall.client;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,82 +36,95 @@ import com.ejunhai.junhaimall.system.service.IConfigService;
 @RequestMapping("")
 public class OrderController extends BaseController {
 
-	@Autowired
-	private ICouponService couponService;
+    @Autowired
+    private ICouponService couponService;
 
-	@Autowired
-	private ICouponSchemeService couponSchemeService;
+    @Autowired
+    private ICouponSchemeService couponSchemeService;
 
-	@Autowired
-	private IOrderMainService orderMainService;
+    @Autowired
+    private IOrderMainService orderMainService;
 
-	@Autowired
-	private IConfigService configService;
+    @Autowired
+    private IConfigService configService;
 
-	@RequestMapping("/toSubscribe")
-	public String toSubscribe(ModelMap modelMap, HttpServletRequest request) {
-		Coupon coupon = LoginUtil.getLoginUser(request);
-		if (coupon == null) {
-			return "index";
-		}
+    @RequestMapping("/toSubscribe")
+    public String toSubscribe(ModelMap modelMap, HttpServletRequest request) {
+        Coupon coupon = LoginUtil.getLoginUser(request);
+        if (coupon == null) {
+            return "index";
+        }
 
-		CouponScheme couponScheme = couponSchemeService.readCouponScheme(coupon.getCouponSchemeId());
-		modelMap.put("coupon", coupon);
-		modelMap.put("couponScheme", couponScheme);
+        CouponScheme couponScheme = couponSchemeService.readCouponScheme(coupon.getCouponSchemeId());
+        modelMap.put("coupon", coupon);
+        modelMap.put("couponScheme", couponScheme);
 
-		// 提前预订时间
-		Config config = configService.getConfigByKey(CouponConstant.KEY_COUPON_DEFERDATE);
-		int deferDate = config == null ? 2 : Integer.parseInt(config.getConfigValue());
-		modelMap.put("startDate", DateUtil.format(DateUtil.addDate(new Date(), deferDate), "yyyy-MM-dd"));
-		modelMap.put("endDate", DateUtil.format(DateUtil.addDate(coupon.getUseEnddate(), deferDate), "yyyy-MM-dd"));
+        // 提前预订时间
+        Config config = configService.getConfigByKey(CouponConstant.KEY_COUPON_DEFERDATE);
+        int deferDate = config == null ? 2 : Integer.parseInt(config.getConfigValue());
+        modelMap.put("startDate", DateUtil.format(DateUtil.addDate(new Date(), deferDate), "yyyy-MM-dd"));
+        modelMap.put("endDate", DateUtil.format(DateUtil.addDate(coupon.getUseEnddate(), deferDate), "yyyy-MM-dd"));
 
-		return "subscribe";
-	}
+        return "subscribe";
+    }
 
-	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
-	public String createOrder(OrderMain orderMain, ModelMap modelMap, HttpServletRequest request) throws Exception {
-		Coupon coupon = LoginUtil.getLoginUser(request);
-		if (coupon == null) {
-			return "index";
-		}
+    @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
+    public String createOrder(OrderMain orderMain, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        Coupon coupon = LoginUtil.getLoginUser(request);
+        if (coupon == null) {
+            return "index";
+        }
 
-		// 验证礼品卡的可用性
-		coupon = couponService.getCouponByNo(coupon.getCouponNumber());
-		if (coupon.getState().intValue() != CouponConstant.COUPON_STATE_ACTIVATE) {
-			return "redirect:toSubscribe.jhtml";
-		}
+        // 验证礼品卡的可用性
+        coupon = couponService.getCouponByNo(coupon.getCouponNumber());
+        if (coupon.getState().intValue() != CouponConstant.COUPON_STATE_ACTIVATE) {
+            return "redirect:toSubscribe.jhtml";
+        }
 
-		Assert.notNull(orderMain.getConsignee(), "consignee is null");
-		Assert.notNull(orderMain.getProvinceCode(), "provinceCode is null");
-		Assert.notNull(orderMain.getCityCode(), "cityCode is null");
-		Assert.notNull(orderMain.getAreaCode(), "areaCode is null");
-		Assert.notNull(orderMain.getOrderDate(), "orderDate is null");
-		Assert.notNull(orderMain.getDetailAddress(), "detailAddress is null");
-		Assert.notNull(orderMain.getMobilePhone(), "mobilePhone is null");
+        Assert.notNull(orderMain.getConsignee(), "consignee is null");
+        Assert.notNull(orderMain.getProvinceCode(), "provinceCode is null");
+        Assert.notNull(orderMain.getCityCode(), "cityCode is null");
+        Assert.notNull(orderMain.getAreaCode(), "areaCode is null");
+        Assert.notNull(orderMain.getOrderDate(), "orderDate is null");
+        Assert.notNull(orderMain.getDetailAddress(), "detailAddress is null");
+        Assert.notNull(orderMain.getMobilePhone(), "mobilePhone is null");
 
-		orderMain = orderMainService.createOrderMain(coupon, orderMain);
+        // 提前预订时间
+        Config config = configService.getConfigByKey(CouponConstant.KEY_COUPON_DEFERDATE);
+        int deferDate = config == null ? 2 : Integer.parseInt(config.getConfigValue());
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = format.parse(DateUtil.format(DateUtil.addDate(new Date(), deferDate), "yyyy-MM-dd"));
+        Date endDate = format.parse(DateUtil.format(DateUtil.addDate(coupon.getUseEnddate(), deferDate), "yyyy-MM-dd"));
+        Date orderDate = format.parse(orderMain.getOrderDate());
 
-		// 更新coupon状态
-		request.getSession().setAttribute(LoginUtil.LOGIN_USER, coupon);
-		modelMap.put("orderMain", orderMain);
-		modelMap.put("createOrderSuccess", true);
-		return "profile";
-	}
+        // 预定日期无效
+        if (!(orderDate.getTime() >= startDate.getTime() && orderDate.getTime() <= endDate.getTime())) {
+            return "redirect:toSubscribe.jhtml";
+        }
 
-	@RequestMapping("/orderInfo")
-	public String orderInfo(ModelMap modelMap, HttpServletRequest request) {
-		Coupon coupon = LoginUtil.getLoginUser(request);
-		if (coupon == null) {
-			return "index";
-		}
+        orderMain = orderMainService.createOrderMain(coupon, orderMain);
 
-		coupon = this.couponService.getCouponByNo(coupon.getCouponNumber());
-		CouponScheme couponScheme = couponSchemeService.readCouponScheme(coupon.getCouponSchemeId());
-		modelMap.put("coupon", coupon);
-		modelMap.put("couponScheme", couponScheme);
+        // 更新coupon状态
+        request.getSession().setAttribute(LoginUtil.LOGIN_USER, coupon);
+        modelMap.put("orderMain", orderMain);
+        modelMap.put("createOrderSuccess", true);
+        return "profile";
+    }
 
-		OrderMain orderMain = orderMainService.getOrdermainByOrderMainNo(coupon.getUseOrderNumber());
-		modelMap.put("orderMain", orderMain);
-		return "orderInfo";
-	}
+    @RequestMapping("/orderInfo")
+    public String orderInfo(ModelMap modelMap, HttpServletRequest request) {
+        Coupon coupon = LoginUtil.getLoginUser(request);
+        if (coupon == null) {
+            return "index";
+        }
+
+        coupon = this.couponService.getCouponByNo(coupon.getCouponNumber());
+        CouponScheme couponScheme = couponSchemeService.readCouponScheme(coupon.getCouponSchemeId());
+        modelMap.put("coupon", coupon);
+        modelMap.put("couponScheme", couponScheme);
+
+        OrderMain orderMain = orderMainService.getOrdermainByOrderMainNo(coupon.getUseOrderNumber());
+        modelMap.put("orderMain", orderMain);
+        return "orderInfo";
+    }
 }
