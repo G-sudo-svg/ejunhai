@@ -1,4 +1,4 @@
-package com.ejunhai.junhaimall.filter;
+package ;com.ejunhai.junhaimall.filter
 
 import java.io.IOException;
 
